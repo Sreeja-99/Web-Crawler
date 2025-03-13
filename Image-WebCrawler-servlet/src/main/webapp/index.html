@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spidey Crawler</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<div class="scrolling-text">
+    <p>Developed by - Sreeja Kaparthi</p>
+</div>
+
+<body>
+<div class="hero">
+    <h1>Spidey Crawler</h1>
+</div>
+
+<div class="search">
+    <div class="input">
+        <div class="search-wrapper">
+            <form id="searchForm">
+                <input type="text" name="url" placeholder="Enter URL to search..." id="urlInputField">
+                <button type="submit"><span style="color:whitesmoke"><i class="fa fa-search fa-2x"></i></span></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="output">
+    <div id="resultsContainer" class="results"></div>
+</div>
+
+<script>
+    const resultsContainer = document.getElementById("resultsContainer");
+    const urlInputField = document.getElementById("urlInputField");
+
+    // Callback function to handle API response
+    const handleApiResponse = (xhr, callback) => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status !== 200) {
+                alert(`API call returned bad code: ${xhr.status} - ${xhr.statusText}: ${xhr.responseText}`);
+                return;
+            }
+
+            const responseData = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+            const originalUrl = xhr.getResponseHeader("og-url");
+
+            if (callback) {
+                callback(responseData, originalUrl);
+            }
+        }
+    };
+
+    // Function to update the results section with the response from the API
+    const updateResults = (responseData, originalUrl) => {
+        resultsContainer.innerHTML = ''; // Clear previous results
+
+        // Function to create a result section for displaying images
+        const createResultSection = (pageUrl, images, isOriginal = false) => {
+            const resultSection = document.createElement("div");
+            resultSection.classList.add("single-result");
+            resultSection.style.margin = "20px";
+
+            const sectionTitle = document.createElement("div");
+            sectionTitle.style.color = "#40C0C0";
+            sectionTitle.style.marginTop = "10px";
+            sectionTitle.style.marginBottom = "5px";
+            sectionTitle.innerHTML = isOriginal
+                ? `Unique images from ${originalUrl}`
+                : `Unique images from ${pageUrl}`;
+            resultSection.appendChild(sectionTitle);
+
+            images.forEach(imageSrc => {
+                const imageElement = document.createElement("img");
+                imageElement.width = 200;
+                imageElement.src = imageSrc;
+                resultSection.appendChild(imageElement);
+            });
+
+            return resultSection;
+        };
+
+        // Handle images from the original URL
+        if (responseData[originalUrl]) {
+            resultsContainer.appendChild(createResultSection(originalUrl, responseData[originalUrl], true));
+        }
+
+        // Handle images from other pages
+        Object.entries(responseData).forEach(([pageUrl, images]) => {
+            if (pageUrl !== originalUrl) {
+                resultsContainer.appendChild(createResultSection(pageUrl, images));
+            }
+        });
+    };
+
+    // Function to make the API call
+    const makeApiRequest = (url, method, requestData, callback) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, window.location.origin + url);
+        xhr.onreadystatechange = handleApiResponse.bind(null, xhr, callback);
+        xhr.send(requestData instanceof FormData || typeof requestData === 'string' ? requestData : JSON.stringify(requestData));
+    };
+
+    // Event listener for form submission
+    document.querySelector('button').addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const inputUrl = urlInputField.value;
+        if (inputUrl && inputUrl !== "Enter URL to search...") {
+            makeApiRequest(`/imagefinder-0.1.0-SNAPSHOT/main?url=${inputUrl}`, 'POST', null, updateResults);
+        } else {
+            alert("Please enter a URL before searching");
+        }
+    });
+</script>
+</body>
+
+</html>

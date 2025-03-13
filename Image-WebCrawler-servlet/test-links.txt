@@ -1,0 +1,4 @@
+Please paste your list of test URLs below:
+https://stackoverflow.co/company/careers
+https://thecoderenroute.github.io/
+https://www.gettyimages.com/editorial-images

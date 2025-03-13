@@ -1,0 +1,244 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+/* Global Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2b2b2b; /* Darker background */
+    color: #f5f5f5; /* Light text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 0 15px;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: #ff6347; /* Tomato color for the header */
+    margin-bottom: 20px;
+}
+
+/* Scrolling Text Section */
+.scrolling-text {
+    position: fixed; /* Keeps the text fixed at the top */
+    bottom: 10px; /* 10px from the bottom of the screen */
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Darker background */
+    color: #fffae6; /* Off-white text */
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 10px 0;
+    white-space: nowrap; /* Prevents line breaks */
+    overflow: hidden; /* Hides overflowed content */
+    box-sizing: border-box;
+}
+
+.scrolling-text p {
+    display: inline-block;
+    animation: scroll-left 15s linear infinite; /* Creates the scrolling effect */
+    margin: 0;
+}
+
+/* Keyframe for scrolling effect */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(100%); /* Starts from the right */
+    }
+    100% {
+        transform: translateX(-100%); /* Moves to the left */
+    }
+}
+
+/* Search Bar Section */
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.input {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px 50px 12px 20px; /* Adjusting padding for the search icon */
+    border-radius: 30px; /* Rounder corners */
+    border: 1px solid #ff6347; /* Border in tomato color */
+    background: rgba(255, 255, 255, 0.15); /* Light translucent background */
+    color: #f5f5f5; /* Light text inside input */
+    font-size: 18px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+input[type="text"]::placeholder {
+    color: #d6e1e9; /* Lighter placeholder color */
+}
+
+/* Button Styling */
+button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff6347; /* Tomato color for button */
+    border: none;
+    cursor: pointer;
+    padding: 0.75em;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    transition: background 0.3s;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    background: #e55347; /* Slightly darker tomato on hover */
+}
+
+button i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Results Section */
+.output {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.results {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Individual Result Styling */
+.single-result {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    width: 250px;
+    box-sizing: border-box;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.single-result:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+.single-result img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Footer Section */
+.footer {
+    width: 100%;
+    background-color: rgba(36, 35, 35, 0.8); /* Darker footer background */
+    color: #fffae6; /* Light text for footer */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1em;
+    position: relative;
+    bottom: 0;
+}
+
+.footer a {
+    color: #ff6347; /* Tomato color for links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .input input[type="text"] {
+        font-size: 16px;
+    }
+
+    .single-result {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Wrapper for the search input and button */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Style for the search input */
+#urlInputField {
+    width: 100%;
+    padding: 12px 50px 12px 20px; /* Adjust the padding to leave space for the button */
+    border-radius: 30px;
+    border: 1px solid #ff6347; /* Tomato color border */
+    background: rgba(255, 255, 255, 0.15);
+    color: #f5f5f5;
+    font-size: 18px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+#searchForm button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent; /* No background for the button */
+    border: none;
+    cursor: pointer;
+    padding: 0.75em;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+#searchForm button i {
+    color: #ff6347; /* Tomato color for the icon */
+}
+
+/* Button hover effect */
+#searchForm button:hover i {
+    color: #e55347; /* Slightly darker color on hover */
+}
